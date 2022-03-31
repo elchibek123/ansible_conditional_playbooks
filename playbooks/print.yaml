@@ -1,0 +1,9 @@
+---
+- name:
+  hosts: all
+  vars:
+    message: "This is test message"
+  tasks:
+    - name:
+      debug:
+        msg: "{{ message }}"
