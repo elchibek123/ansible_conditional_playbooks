@@ -1,9 +1,10 @@
 ---
-- name:
+- name: Print message
   hosts: all
+  gather_facts: no
   vars:
     message: "This is test message"
   tasks:
-    - name:
+    - name: print message
       debug:
         msg: "{{ message }}"
