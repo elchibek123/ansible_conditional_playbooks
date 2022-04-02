@@ -1,0 +1,19 @@
+---
+- name: Ping hosts
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: ping hosts
+      ping:
+      register: task1_result
+    - name: Create an empty file
+      file:
+        path: /tmp/file1_ansible
+        state: touch
+      when: task1_result is succeeded
+    - name: Insert lines to a file
+      blockinfile:
+        path: /tmp/file1_ansible
+        block: |
+          This is line one
+          This is line two

@@ -1,0 +1,12 @@
+---
+- name: Conditional 1 Playbook
+  hosts: all
+  gather_facts: yes
+  tasks:
+    - name: ping hosts
+      ping:
+      register: task1_result
+    - name: Print OS information
+      debug:
+        msg: "{{ ansible_distribution }}"
+      when: task1_result is failed
