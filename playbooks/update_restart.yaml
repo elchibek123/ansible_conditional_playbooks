@@ -1,5 +1,5 @@
 ---
-- name: Updte & Restart packages
+- name: Update & Restart packages
   hosts: all
   gather_facts: yes
   tasks:
@@ -13,6 +13,6 @@
         name: '*'
         state: latest
       when: ansible_distribution == "Ubuntu"
-    - name: Reboot host and wait for it to restart
+    - name: Restart servers
       reboot:
         msg: "Reboot"
