@@ -1,5 +1,5 @@
 ---
-- name: Updte & Restart packages
+- name: Update & Restart packages
   hosts: all
   gather_facts: yes
   tasks:
