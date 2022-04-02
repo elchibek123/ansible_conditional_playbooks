@@ -1,0 +1,18 @@
+---
+- name: Updte & Restart packages
+  hosts: all
+  gather_facts: yes
+  tasks:
+    - name: Update packages on CentOS
+      yum:
+        name: '*'
+        state: latest
+      when: ansible_distribution == "CentOS"
+    - name: Update packages on Ubuntu
+      apt:
+        name: '*'
+        state: latest
+      when: ansible_distribution == "Ubuntu"
+    - name: Reboot host and wait for it to restart
+      reboot:
+        msg: "Reboot"
