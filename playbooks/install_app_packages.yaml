@@ -1,0 +1,17 @@
+---
+- name: App Deployment
+  hosts: '{{ target_host }}'
+  vars_files:
+    - ../vars_files/vars_install_app_packages.yaml
+  vars:
+   - message: 'This message is from vars_files'
+  gather_facts: '{{ facts }}'
+  tasks:
+    - name: Ping
+      ping:
+    - name:
+      debug:
+        msg: '{{ message }}'
+    - name: Print Facts
+      debug:
+        msg: '{{ target_host }} Operating System is: {{ ansible_distribution }}'

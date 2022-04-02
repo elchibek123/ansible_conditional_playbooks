@@ -1,0 +1,4 @@
+---
+target_host: 'web2'
+facts: yes
+message: 'This message is from vars_files'
