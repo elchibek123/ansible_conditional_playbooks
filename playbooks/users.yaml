@@ -1,11 +1,27 @@
 ---
-- name: Add users to Web1
-  hosts: 10.108.0.3
+- name: Add users to Web2
+  hosts: web1
+  gather_facts: no
   tasks:
-    - name: Add users
+    - name: Add user bob
       user:
-        name:
-         - bob
-         - anna
-         - amy
-         - tom
+        name: bob
+    - name: Add user anna
+      user:
+        name: anna
+    - name: Add user amy
+      user:
+        name: amy
+    - name: Add user tom
+      user:
+        name: tom
+        
+        # or we can do
+    #- name: Add users
+    #  user:
+    #    name: "{{ item }}"
+    #  with_items:
+    #    - bob
+    #    - anna
+    #    - amy
+    #    - tom

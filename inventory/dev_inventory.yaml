@@ -3,13 +3,12 @@ all:
   hosts:
     10.108.0.3:
     10.108.0.4:
-    10.108.0.5:
   children:
     dev:
       hosts:
         web1:
           ansible_host: 10.108.0.3
-          ansible_port: 22
+          ansible_port: 1677
         web2:
           ansible_host: 10.108.0.4
-          ansible_port: 7789
+          ansible_port: 1677

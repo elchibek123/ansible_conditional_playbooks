@@ -1,13 +1,32 @@
 ---
-- name: Conditional 1 Playbook
-  hosts: web2
+- name:
+  hosts: web1
   gather_facts: no
   tasks:
+    - name: Ping hosts
+      ping:
+    - name: Ensure SELinux is set to enforcing mode
+      lineinfile:
+        path: /etc/selinux/config
+        regexp: '^SELINUX='
+        line: SELINUX=disabled
+    - name: Restart server
+      reboot:
+        msg: "Server is restarted"
+    - name: Wait
+      pause:
+        minutes: 5
     - name: Setup alternate SSH port
       lineinfile:
-        path: "/etc/ssh/sshd_config"
-        regexp: "^Port 2222"
-        line: "Port 7789"
+        dest: "/etc/ssh/sshd_config"
+        regexp: "^#Port 22"
+        line: "Port 1677"
+    - name: Restart server
+      reboot:
+        msg: "Server is restarted"
+    - name: Wait
+      pause:
+        minutes: 5
     - name: Restart sshd
       systemd:
         name: sshd
