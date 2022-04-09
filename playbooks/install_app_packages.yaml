@@ -1,0 +1,65 @@
+---
+- name: App Deployment
+  hosts: '{{ target_host }}'
+  vars_files:
+    - ../vars_files/vars_install_app_packages.yaml
+  vars:
+   - message: 'This message is from playbook var'
+  gather_facts: '{{ facts }}'
+  tasks:
+    - name: Ping
+      ping:
+    - name: Print Message
+      debug:
+        msg: '{{ message }}'
+    - name: Print Facts
+      debug:
+        msg: '{{ target_host }} Operating System is: {{ ansible_distribution }}'
+    - name: Install EPEL-RELEASE
+      yum:
+        name: epel-release
+        state: latest
+      when: ansible_distribution == "CentOS"
+    - name: Install Nginx
+      yum:
+        name: nginx
+        state: latest
+      when: ansible_distribution == "CentOS"
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: latest
+      when: ansible_distribution == "Ubuntu"
+    - name: Start & Enable Nginx
+      systemd:
+        name: nginx
+        state: started
+        enabled: yes
+    - name: Creating file
+      file: 
+        path: /root/index.html
+        state: touch
+    
+    - name: Writing into file
+      blockinfile:
+        path: /root/index.html
+        block:  |
+          '{{ index }}'
+    - name: Copy File to CentOS
+      copy:
+        src: /root/index.html
+        dest: /usr/share/nginx/html/index.html
+        owner: nginx
+        group: nginx
+        mode: '664'
+      when: ansible_distribution == "CentOS"
+    - name: Copy File to Ubuntu
+      copy:
+        src: /root/index.html
+        dest: /usr/share/nginx/html/index.html
+        owner: www-data
+        group: www-data
+        mode: '777'
+      when: ansible_distribution == "Ubuntu"
+    - name: Restart servers
+      reboot:

@@ -1,0 +1,12 @@
+---
+- name:
+  hosts: dev
+  gather_facts: no
+  vars_files:
+    - ../vars_files/vars_print_vars.yaml
+  tasks:
+    - name: Ping
+      ping:
+    - name: Print Variables
+      debug:
+        msg: '{{ message }}'

@@ -1,6 +1,6 @@
 ---
 - name: Update & Restart packages
-  hosts: all
+  hosts: dev
   gather_facts: yes
   tasks:
     - name: Update packages on CentOS
@@ -15,4 +15,4 @@
       when: ansible_distribution == "Ubuntu"
     - name: Restart servers
       reboot:
-        msg: "Reboot"
+        msg: 'Rebooted'
